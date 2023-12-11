@@ -24,7 +24,7 @@ const getDir = path => {
 
 
 const convertEnvStringToJson = (env) => {
-	const records = env.split(/\\n|;|\\r/g);
+	const records = env.split(/\\n|;|\\r|\n/g);
 	const jsonEnv = {};
 	for (let i  = 0; i < records.length; i++) {
 		const pos = records[i].indexOf("=");
