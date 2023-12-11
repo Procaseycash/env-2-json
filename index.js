@@ -23,10 +23,10 @@ const getDir = path => {
 
 
 
-const convertEnvStringToJson = (env) => {
-	const records = env.split("\n");
+const convertEnvStringToJson = (env, delimiter = '\n') => {
+	const records = env.split(delimiter);
 	const jsonEnv = {};
-	for (let i  = 0; i < records.length - 1; i++) {
+	for (let i  = 0; i < records.length; i++) {
 		const pos = records[i].indexOf("=");
 		const data = [];
 		data[0] = records[i].substring(0, pos);
@@ -48,14 +48,17 @@ const convertEnvToJson = (path) => {
 
 
 const convertEnvToJsonViaCMD = () => {
-	const filePath = getArg('--file')[1]?.trim();	
+	const filePath = getArg('--file')[1]?.trim();
+	const envString = getArg('--env')[1]?.trim();
 	const isConsole = getArg('--csl')[1]?.trim();	
 	const isWriteToRoot = getArg('--wtr')[1]?.trim();
 	const outputPath = getArg('--out')[1]?.trim();
 	
-	if (!filePath) return;
+	if (!filePath && !envString) throw new Error ('FilePath or envString not supplied');
+
+	console.log('envString=', envString);
 	
-	const { location, jsonEnv } = convertEnvToJson(filePath);
+	const { location, jsonEnv } =  envString ? convertEnvStringToJson(envString, ";") : convertEnvToJson(filePath);
 
 	const data = JSON.stringify(jsonEnv, null, 2);
 

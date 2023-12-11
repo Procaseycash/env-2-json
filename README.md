@@ -41,6 +41,11 @@ Options supported are stated below
 		<td>`users/configs/.env` or `src/.env` etc,</td>
 	</tr>
 	<tr>
+		<td>`--env`</td>
+		<td>Most important if `--file` is not provided eg: `--env=BASE_URL="https://we.com;API_URL=https://api.example.com/v1/"`, separated with semicolon(`;`)</td>
+		<td>`--env="API_BASE_URL=users/configs/.env; CARD_NO=13313`</td>
+	</tr>
+	<tr>
 		<td>`--wrt`</td>
 		<td>Write to root is a boolean type to generate equivalent .json version of same name. `.env` will be `env.json`</td> 
 		<td>`true|false`  or `1|0`, eg: `--wrt=true`</td>
@@ -56,12 +61,17 @@ Options supported are stated below
 		<td>`--cls=true`</td>
 	</tr>
 </table>
+<br><br>
 
-See use case below, you can either use `etwoj` or `envtwojson` for command name
+
+See use case below, you can either use `etwoj` or `envtwojson` for command name, you can as well change `--file` for `--env` to use string type as seen below but delimiter is used as semicolon (`;`)
 
 ```sh
  ## Default to console
 $ envtwojson --file=.env 
+
+ ## Default to console
+$ envtwojson --env='https://we.com;API_URL=https://api.example.com/v1/'
 
 ## Write to source directory env.json derived from filename of .env
 $ envtwojson --file=.env --wrt=true 
