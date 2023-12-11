@@ -5,11 +5,10 @@ const getArg = (name) => {
 	
 	for (let arg of argvs) {
 		if (arg.toLowerCase().includes(name.toLowerCase())) {
-			const data = [];	
 			const pos = arg.indexOf("=");
-			data[0] = arg.substring(0, pos);
-			data[1] = arg.substring(pos + 1);
-			return data;
+			const key = arg.substring(0, pos);
+			const value = arg.substring(pos + 1);
+			return [key, value];
 		}
 	}
 
@@ -26,13 +25,12 @@ const getDir = path => {
 const convertEnvStringToJson = (env) => {
 	const records = env.split(/\\n|;|\\r|\n/g);
 	const jsonEnv = {};
-	for (let i  = 0; i < records.length; i++) {
+	for (let i = 0; i < records.length; i++) {
 		const pos = records[i].indexOf("=");
-		const data = [];
-		data[0] = records[i].substring(0, pos);
-		data[1] = records[i].substring(pos + 1);
-		if (data[1] === "" || data[0] === "") continue;
-		jsonEnv[data[0].trim()] = data[1].trim();
+		const key = records[i].substring(0, pos)?.trim();
+		const value = records[i].substring(pos + 1)?.trim();
+		if (key === "" || value === "") continue;
+		jsonEnv[key] = value;
 	}
 
 	return { jsonEnv, location: process.cwd() } ;
