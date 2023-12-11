@@ -1,0 +1,40 @@
+{
+  "name": "envtwojson",
+  "version": "1.0.2",
+  "description": "This allows conversion of any .env, .env-local etc file to .json and does allow method imports to do this or via cmd. ",
+  "main": "index.js",
+  "private": false,
+   "bin": {
+    "etwoj": "./cli",
+    "envtwojson": "./cli"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Procaseycash/env-2-json.git"
+  },
+  "keywords": [
+    "env2json",
+    "envtojson",
+    "envconvertertojson",
+    "converter",
+    "for",
+    "env",
+    "autoload",
+    "env",
+    "to",
+    "json",
+    "environment",
+    "export",
+    "env",
+    "json"
+  ],
+  "author": "kazeem olanipekun <kezyolanipekun@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Procaseycash/env-2-json/issues"
+  },
+  "homepage": "https://github.com/Procaseycash/env-2-json#readme"
+}
