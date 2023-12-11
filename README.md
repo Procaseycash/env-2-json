@@ -42,7 +42,7 @@ Options supported are stated below
 	</tr>
 	<tr>
 		<td>`--env`</td>
-		<td>Most important if `--file` is not provided eg: `--env=BASE_URL="https://we.com;API_URL=https://api.example.com/v1/"`, separated with semicolon(`;`)</td>
+		<td>Most important if `--file` is not provided eg: `--env=BASE_URL="https://we.com;API_URL=https://api.example.com/v1/"`, separated with semicolon(`;`) or newline (`\n`)</td>
 		<td>`--env="API_BASE_URL=users/configs/.env; CARD_NO=13313`</td>
 	</tr>
 	<tr>
@@ -64,7 +64,7 @@ Options supported are stated below
 <br><br>
 
 
-See use case below, you can either use `etwoj` or `envtwojson` for command name, you can as well change `--file` for `--env` to use string type as seen below but delimiter is used as semicolon (`;`)
+See use case below, you can either use `etwoj` or `envtwojson` for command name, you can as well change `--file` for `--env` to use string type as seen below but separated delimiter is used as semicolon (`;`) or newline (`\n`)
 
 ```sh
  ## Default to console
