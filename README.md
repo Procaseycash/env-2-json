@@ -67,6 +67,6 @@ $ envtwojson --file=.env
 $ envtwojson --file=.env --wrt=true 
 
 ## Write to the location provided from a known directory.
-$ envtwojson --file=.env --output=/src/configs/.env-local 
+$ envtwojson --file=.env --out=/src/configs/.env-local 
 
 ```
