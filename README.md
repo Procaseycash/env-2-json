@@ -53,7 +53,7 @@ Options supported are stated below
 	<tr>
 		<td>`--out`</td> 
 		<td>Output allows you to provide the path to write into. this will write from current directory plus the path provided.</td> 
-		<td>`--output=/users/configs`</td>
+		<td>`--out=/users/configs`</td>
 	</tr>
 	<tr>
 		<td>`--cls`</td> 
@@ -78,5 +78,27 @@ $ envtwojson --file=.env --wrt=true
 
 ## Write to the location provided from a known directory.
 $ envtwojson --file=.env --out=/src/configs/.env-local 
+
+```
+<br><br>
+
+
+<h1>OR</h1>
+
+<br><br>
+
+
+```sh
+ ## Default to console
+$ etwoj --file=.env 
+
+ ## Default to console
+$ etwoj --env='https://we.com;API_URL=https://api.example.com/v1/'
+
+## Write to source directory env.json derived from filename of .env
+$ etwoj --file=.env --wrt=true 
+
+## Write to the location provided from a known directory.
+$ etwoj --file=.env --out=/src/configs/.env-local 
 
 ```
