@@ -80,12 +80,8 @@ $ envtwojson --file=.env --wrt=true
 $ envtwojson --file=.env --out=/src/configs/.env-local 
 
 ```
-<br><br>
 
-
-<h1>OR</h1>
-
-<br><br>
+<h3>OR</h3>
 
 
 ```sh

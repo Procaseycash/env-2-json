@@ -1,6 +1,6 @@
 {
   "name": "envtwojson",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "This allows conversion of any .env, .env-local etc file to .json and does allow method imports to do this or via cmd. ",
   "main": "index.js",
   "private": false,
