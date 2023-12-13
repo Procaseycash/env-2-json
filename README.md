@@ -41,7 +41,7 @@ Options supported are stated below
 	<tr><th width="10%">Options</th> <th width="50%">Description</th> <th width="40%">Value</th></tr>
 	<tr>
 		<td>`--file`</td>
-		<td>Most important, providing the file path to the `.env-sample`,  eg: `--file=examples/.env-sample`</td>
+		<td>Most important, providing the file path to the `.env-sample` or `env-sample.json`,  eg: `--file=examples/.env-sample` or `--file=examples/env-sample.json`</td>
 		<td>`users/configs/.env-sample` or `src/.env-sample` etc,</td>
 	</tr>
 	<tr>
