@@ -29,7 +29,11 @@
     "environment",
     "export",
     "env",
-    "json"
+    "json",
+    "json2env",
+    "jsontoenv",
+    "jsonconvertertoenv",
+    "convertjsontoenv"
   ],
   "author": "kazeem olanipekun <kezyolanipekun@gmail.com>",
   "license": "ISC",

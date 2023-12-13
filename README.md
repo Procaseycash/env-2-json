@@ -1,6 +1,6 @@
 # EnvTwoJson
 
-This package allows env to json CMD and likewise for import for use in code.
+This package allows `env-to-json` and `json-to-env` on CMD and code level usage
 
 ## Install
 
@@ -15,16 +15,20 @@ This package allows env to json CMD and likewise for import for use in code.
 ## Example Usage By Code
 
 ```ts
-const { envFromPathToJson, envFromStringToJson } = require("envtwojson");
-// location here is the part from the app root.
-const { jsonEnv, location } = envFromPathToJson('/app/.env'); 
+const { envFromPathToJson, envFromStringToJson, jsonFromPathToEnv } = require("envtwojson");
+// ENV2JSON: location here is the part from the app root.
+const { jsonEnv, location } = envFromPathToJson('examples/.env-sample'); 
 
-// Or use below approach
+// ENV2JSON: Or use below approach
 // location here is always current app directory where this method is used and env data are always separated by newline.
 const env = `BASE_URL=http://example.com
 			 APP_PATH=/api/v1/users
 			 `			 
 const { jsonEnv, location } = envFromStringToJson(env); 
+
+
+// JSON2ENV: location here is the part from the app root.
+const { jsonEnv, location } = jsonFromPathToEnv('examples/env-sample.json');
 ```
 
 
@@ -37,18 +41,18 @@ Options supported are stated below
 	<tr><th width="10%">Options</th> <th width="50%">Description</th> <th width="40%">Value</th></tr>
 	<tr>
 		<td>`--file`</td>
-		<td>Most important, providing the file path to the `.env`,  eg: `--file=.env`</td>
-		<td>`users/configs/.env` or `src/.env` etc,</td>
+		<td>Most important, providing the file path to the `.env-sample`,  eg: `--file=examples/.env-sample`</td>
+		<td>`users/configs/.env-sample` or `src/.env-sample` etc,</td>
 	</tr>
 	<tr>
 		<td>`--env`</td>
 		<td>Most important if `--file` is not provided eg: `--env=BASE_URL="https://we.com;API_URL=https://api.example.com/v1/"`, separated with semicolon(`;`) or newline (`\n`)</td>
-		<td>`--env="API_BASE_URL=users/configs/.env; CARD_NO=13313`</td>
+		<td>`--env="API_BASE_URL=users/configs/.env-sample; CARD_NO=13313`</td>
 	</tr>
 	<tr>
-		<td>`--wrt`</td>
-		<td>Write to root is a boolean type to generate equivalent .json version of same name. `.env` will be `env.json`</td> 
-		<td>`true|false`  or `1|0`, eg: `--wrt=true`</td>
+		<td>`--wtr`</td>
+		<td>Write to root is a boolean type to generate equivalent .json version of same name. `.env-sample` will be `env.json`</td> 
+		<td>`true|false`  or `1|0`, eg: `--wtr=true`</td>
 	</tr>
 	<tr>
 		<td>`--out`</td> 
@@ -68,16 +72,26 @@ See use case below, you can either use `etwoj` or `envtwojson` for command name,
 
 ```sh
  ## Default to console
-$ envtwojson --file=.env 
+$ envtwojson --file=examples/.env-sample 
 
  ## Default to console
 $ envtwojson --env='https://we.com;API_URL=https://api.example.com/v1/'
 
-## Write to source directory env.json derived from filename of .env
-$ envtwojson --file=.env --wrt=true 
+## Write to source directory env.json derived from filename of .env-sample
+$ envtwojson --file=examples/.env-sample --wtr=true 
 
 ## Write to the location provided from a known directory.
-$ envtwojson --file=.env --out=/src/configs/.env-local 
+$ envtwojson --file=examples/.env-sample --out=examples/env-sample.json 
+
+
+## JSON2ENV: Write to the location provided from a known directory.
+$ envtwojson --file=examples/env-sample.json --out=examples/.env-sample
+
+## JSON2ENV: ## Default to console
+$ envtwojson --file=examples/env-sample.json 
+
+## JSON2ENV: Write to source directory env.json derived from filename of .env-sample
+$ envtwojson --file=examples/env-sample.json --wtr=true 
 
 ```
 
@@ -86,15 +100,25 @@ $ envtwojson --file=.env --out=/src/configs/.env-local
 
 ```sh
  ## Default to console
-$ etwoj --file=.env 
+$ etwoj --file=examples/.env-sample 
 
  ## Default to console
 $ etwoj --env='https://we.com;API_URL=https://api.example.com/v1/'
 
-## Write to source directory env.json derived from filename of .env
-$ etwoj --file=.env --wrt=true 
+## Write to source directory env.json derived from filename of .env-sample
+$ etwoj --file=examples/.env-sample --wtr=true 
 
 ## Write to the location provided from a known directory.
-$ etwoj --file=.env --out=/src/configs/.env-local 
+$ etwoj --file=examples/.env-sample --out=examples/env-sample.json 
 
+
+## JSON2ENV: Write to the location provided from a known directory.
+$ etwoj --file=examples/env-sample.json --out=examples/.env-sample-local
+
+## JSON2ENV: ## Default to console
+$ etwoj --file=examples/env-sample.json 
+
+
+## JSON2ENV: Write to source directory env.json derived from filename of .env-sample
+$ etwoj --file=examples/env-sample.json --wtr=true 
 ```

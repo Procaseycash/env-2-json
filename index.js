@@ -20,6 +20,53 @@ const getDir = path => {
 	return path[0] !== '/' ? currentDirectory + '/' + path : currentDirectory + path;
 };
 
+const castObjToEnv = (parentKey, data) => {
+  let envData = '';
+  const recursiveEnv = (key, obj) => {
+  	if (typeof obj !== 'object') return envData += `${key}=${obj}\n`;
+    if (Array.isArray(obj)) {
+    	if (typeof obj[0] !== 'object') {
+    		return envData += `${key}=${obj.toString()}\n`;
+    	}
+      	obj.forEach((r) => recursiveEnv(key, r));
+    } else {
+     	Object.keys(obj).forEach(k => recursiveEnv(`${key}.${k}`, obj[k]) );
+    }
+  };
+
+  try {
+    recursiveEnv(parentKey, data);
+    return envData;
+  } catch (e) {
+    return `${parentKey}=${data}\n`;
+  }
+
+};
+
+const convertJsonStringToEnv = (jsonString) => {
+	const records = typeof jsonString === 'string' ? JSON.parse(jsonString) : jsonString;
+	let jsonEnv = '';
+	for (let key in records) {
+		let value = records[key];
+
+		if (key === "" || value === "") continue;
+
+		if (typeof value === 'object') {
+		 	jsonEnv += castObjToEnv(key, value);
+		 } else {
+			jsonEnv += `${key}=${value}\n`;
+		}
+	}
+	return { jsonEnv, location: process.cwd() } ;
+}
+
+const convertJsonToEnv = (path) => {
+	const location = getDir(path);
+	if (!location.includes('.json')) throw new Error ('File type must be a .json');
+	const json = fs.readFileSync(location, 'utf8');
+	const { jsonEnv } = convertJsonStringToEnv(json);
+	return { jsonEnv, location } ;
+}
 
 
 const convertEnvStringToJson = (env) => {
@@ -44,8 +91,7 @@ const convertEnvToJson = (path) => {
 	return { jsonEnv, location } ;
 }
 
-
-const convertEnvToJsonViaCMD = () => {
+const convertEnvJsonViaCMD = () => {
 	const filePath = getArg('--file')[1]?.trim();
 	const envString = getArg('--env')[1]?.trim();
 	const isConsole = getArg('--csl')[1]?.trim();	
@@ -53,14 +99,26 @@ const convertEnvToJsonViaCMD = () => {
 	const outputPath = getArg('--out')[1]?.trim();
 	
 	if (!filePath && !envString) throw new Error ('FilePath or envString not supplied');
-	
-	const { location, jsonEnv } =  envString ? convertEnvStringToJson(envString) : convertEnvToJson(filePath);
 
-	const data = JSON.stringify(jsonEnv, null, 2);
+	const toEnv = filePath?.endsWith('.json');
+	
+	let result = { location: null, jsonEnv: null };
+
+	if (toEnv) {
+		result = convertJsonToEnv(filePath);
+	} else {
+		result = envString ? convertEnvStringToJson(envString) : convertEnvToJson(filePath);
+	}
+	
+	const { jsonEnv, location } = result;
+	
+	const data = toEnv ? jsonEnv.trim() : JSON.stringify(jsonEnv, null, 2);
+
+	const fileType = toEnv ? '.env' : '.json';
 
 	if (outputPath) {
 		
-		if (!outputPath.includes('.json')) throw new Error ('File type must be a .json');
+		if (!outputPath.includes(fileType)) throw new Error (`File type must be a ${fileType}`);
 
 		const ouputFullPath = getDir(outputPath);
 		fs.writeFileSync(ouputFullPath, data , { flag: 'w', encoding: 'utf8' });
@@ -68,18 +126,20 @@ const convertEnvToJsonViaCMD = () => {
 	}
 
 	if (isWriteToRoot === 'true' || isWriteToRoot === '1' ) {
-		fs.writeFileSync(location.replace('.env', 'env') + '.json', data, { flag: 'w', encoding: 'utf8' });
+		const newLocation = toEnv ? '.' + location.replace('.json', '') : location.replace('.env', 'env') + '.json';
+		fs.writeFileSync(newLocation, data, { flag: 'w', encoding: 'utf8' });
 		process.exit(0);
 	}
 
 	if (isConsole !== 'false' || isConsole !== '0') {
-		console.log('\n\n***************************************START***************************************\n\n', data, '\n\n***************************************END***************************************\n\n', );
+		console.log('\n\n*******************************START*******************************\n\n' + data + '\n\n********************************END********************************\n\n');
+
 		process.exit(0);
 	}
 }
 
-convertEnvToJsonViaCMD();
+convertEnvJsonViaCMD();
 
 
-module.exports = { envFromPathToJson: convertEnvToJson, envFromStringToJson: convertEnvStringToJson, getArg };
+module.exports = { envFromPathToJson: convertEnvToJson, envFromStringToJson: convertEnvStringToJson, getArg, jsonFromPathToEnv: convertJsonToEnv };
 
