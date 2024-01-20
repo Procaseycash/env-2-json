@@ -138,8 +138,9 @@ const convertEnvJsonViaCMD = () => {
 	}
 }
 
-convertEnvJsonViaCMD();
-
 
 module.exports = { envFromPathToJson: convertEnvToJson, envFromStringToJson: convertEnvStringToJson, getArg, jsonFromPathToEnv: convertJsonToEnv };
 
+if (require.main === module) {
+	convertEnvJsonViaCMD();
+}
