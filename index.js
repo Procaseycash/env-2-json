@@ -1,10 +1,13 @@
 const fs = require('fs');
 
 const getArg = (name) => {
-	const argvs = process.argv;
 	
+	if (!name) return;
+	
+	const argvs = process.argv;
+
 	for (let arg of argvs) {
-		if (arg.toLowerCase().includes(name.toLowerCase())) {
+		if (arg && arg.toLowerCase().includes(name.toLowerCase())) {
 			const pos = arg.indexOf("=");
 			const key = arg.substring(0, pos);
 			const value = arg.substring(pos + 1);
@@ -98,7 +101,7 @@ const convertEnvJsonViaCMD = () => {
 	const isWriteToRoot = getArg('--wtr')[1]?.trim();
 	const outputPath = getArg('--out')[1]?.trim();
 	
-	if (!filePath && !envString) throw new Error ('FilePath or envString not supplied');
+	if (!filePath && !envString) return;
 
 	const toEnv = filePath?.endsWith('.json');
 	
@@ -141,6 +144,4 @@ const convertEnvJsonViaCMD = () => {
 
 module.exports = { envFromPathToJson: convertEnvToJson, envFromStringToJson: convertEnvStringToJson, getArg, jsonFromPathToEnv: convertJsonToEnv };
 
-if (require.main === module) {
-	convertEnvJsonViaCMD();
-}
+convertEnvJsonViaCMD();
