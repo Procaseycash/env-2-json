@@ -46,6 +46,22 @@ const castObjToEnv = (parentKey, data) => {
 
 };
 
+const convertPathToJSON = (result, path, value) => {
+  const keys = path.split('.');
+  keys.reduce((acc, key, index) => {
+    if (index === keys.length - 1) {
+    	value = parseFloat(value) ? parseFloat(value) : value;
+    	value = value === 'false' ? false : value === 'true' ? true : value;
+      acc[key] = value;
+    } else {
+      acc[key] = acc[key] || {};
+    }
+    return acc[key];
+  }, result);
+
+  return result;
+};
+
 const convertJsonStringToEnv = (jsonString) => {
 	const records = typeof jsonString === 'string' ? JSON.parse(jsonString) : jsonString;
 	let jsonEnv = '';
@@ -80,7 +96,11 @@ const convertEnvStringToJson = (env) => {
 		const key = records[i].substring(0, pos)?.trim();
 		const value = records[i].substring(pos + 1)?.trim();
 		if (key === "" || value === "") continue;
+		if (key.includes('.')) {
+			convertPathToJSON(jsonEnv, key, value);
+		} else {
 		jsonEnv[key] = value;
+	}
 	}
 
 	return { jsonEnv, location: process.cwd() } ;

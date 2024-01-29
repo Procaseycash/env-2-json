@@ -1,4 +1,13 @@
 {
   "API_URL": "https://www.example.com",
-  "ADMIN_ACCOUNT": "1111111111"
+  "ADMIN_ACCOUNT": "1111111111",
+  "HELLO": {
+    "ME": 1,
+    "HI": 2,
+    "LOVE": {
+      "APP": 2,
+      "ME": 1,
+      "appy": "true" 
+    }
+  }
 }
