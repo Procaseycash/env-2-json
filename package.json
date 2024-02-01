@@ -1,6 +1,6 @@
 {
   "name": "envtwojson",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "This package allows env-to-json and json-to-env on CMD and code level usage",
   "main": "index.js",
   "private": false,

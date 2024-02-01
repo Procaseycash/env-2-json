@@ -1,17 +1,18 @@
 const fs = require("fs");
 
-const getArg = (name) => {
-  if (!name) return;
+const getArgs = (argName = null) => {
+  const args = {};
   const argvs = process.argv;
   for (let arg of argvs) {
-    if (arg && arg.toLowerCase().includes(name.toLowerCase())) {
-      const pos = arg.indexOf("=");
+    const pos = arg.indexOf("=");
+    if (pos > -1) {
       const key = arg.substring(0, pos);
       const value = arg.substring(pos + 1);
-      return [key, value];
+      args[key] = value;
     }
   }
-  return [];
+  if (argName) return args[argName];
+  return args;
 };
 
 const getDir = (path) => {
@@ -108,13 +109,15 @@ const convertEnvToJson = (path) => {
 };
 
 const convertEnvJsonViaCMD = () => {
-  const filePath = getArg("--file")[1]?.trim();
-  const envString = getArg("--env")[1]?.trim();
-  const isConsole = getArg("--csl")[1]?.trim();
-  const isWriteToRoot = getArg("--wtr")[1]?.trim();
-  const outputPath = getArg("--out")[1]?.trim();
+  const argEnv = getArgs();
+  const filePath = argEnv["--file"]?.trim();
+  const envString = argEnv["--env"]?.trim();
+  const isConsole = argEnv["--csl"]?.trim();
+  const isWriteToRoot = argEnv["--wtr"]?.trim();
+  const outputPath = argEnv["--out"]?.trim();
 
   if (!filePath && !envString) return;
+
   const toEnv = filePath?.endsWith(".json");
   let result = { location: null, jsonEnv: null };
   if (toEnv) {
@@ -156,7 +159,8 @@ const convertEnvJsonViaCMD = () => {
 module.exports = {
   envFromPathToJson: convertEnvToJson,
   envFromStringToJson: convertEnvStringToJson,
-  getArg,
+  getArg: (name) => getArgs(name),
+  args: getArgs(),
   jsonFromPathToEnv: convertJsonToEnv,
 };
 
