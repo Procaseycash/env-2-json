@@ -9,7 +9,7 @@ const getArgs = (argName = null) => {
             const key = arg.substring(0, pos);
             const value = arg.substring(pos + 1);
             args[key] = value;
-        } else if (arg.includes('--version')) {
+        } else if (arg.includes('--version') || arg.includes('--v')) {
             args['--version'] = require('./package.json').version;
         }
     }

@@ -1,6 +1,6 @@
 {
   "name": "envtwojson",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "This package allows env-to-json and json-to-env on CMD and code level usage",
   "main": "index.min.js",
   "private": false,
@@ -10,6 +10,7 @@
   },
   "scripts": {
     "prepublishOnly": "npx terser index.js -c -m -o index.min.js",
+    "publish": "git commit -am 'add new feature'; git push; npm publish;",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
