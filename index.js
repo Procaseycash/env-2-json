@@ -84,7 +84,7 @@ const convertJsonToEnv = (path) => {
 };
 
 const convertEnvStringToJson = (env) => {
-  const records = env.split(/\\n|;|\\r|\n/g);
+  const records = env.split(/(?:\r?\n|[;](?=\r?\n|$))/).filter(Boolean);
   const jsonEnv = {};
   for (let i = 0; i < records.length; i++) {
     const pos = records[i].indexOf("=");

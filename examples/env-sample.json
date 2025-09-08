@@ -1,6 +1,7 @@
 {
   "API_URL": "https://www.example.com",
   "ADMIN_ACCOUNT": "1111111111",
+  "APP_ENV": "endpoint=app.com;service_domain=app_reg",
   "HELLO": {
     "ME": 1,
     "HI": 2,

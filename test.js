@@ -2,7 +2,7 @@ const {
   envFromPathToJson,
   envFromStringToJson,
   jsonFromPathToEnv,
-} = require("./index.js");
+} = require("./index.min.js");
 
 console.log("// ENV2JSON: location here is the part from the app root.");
 
@@ -21,6 +21,15 @@ const env = `BASE_URL=http://example.com
 const { jsonEnv: env2, location: loc2 } = envFromStringToJson(env);
 console.log("location: " + loc2 + " ENV: \n");
 console.log(env2);
+
+
+console.log(`\n// ENV2JSON: Or use below approach
+// location here is always current app directory where this method is used and env data are always separated by semi-colon with end of line.;\n`);
+const env_ = `BASE_URL=http://example.com;endpoint=efhfet;\nAPP_PATH=/api/v1/users`;
+const { jsonEnv: v1, location: l2 } = envFromStringToJson(env_);
+console.log("location: " + l2 + " ENV: \n");
+console.log(v1);
+
 
 console.log("\n// JSON2ENV: location here is the part from the app root.\n");
 
