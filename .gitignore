@@ -20,6 +20,8 @@ dist/
 build/
 .tmp/
 
+.idea/
+
 # OS junk
 .DS_Store
 Thumbs.db
