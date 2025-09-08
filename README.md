@@ -12,6 +12,15 @@ This package allows `env-to-json` and `json-to-env` on CMD and code level usage
  $ npm i -g envtwojson
 ```
 
+## Release Command
+```sh
+
+npm run release        # defaults to patch (x.y.z → x.y.(z+1))
+npm run release minor  # bump minor (x.y.z → x.(y+1).0)
+npm run release major  # bump major ((x+1).0.0)
+
+```
+
 ## Example Usage By Code
 
 ```ts

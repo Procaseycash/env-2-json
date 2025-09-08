@@ -10,7 +10,7 @@
   },
   "scripts": {
     "prepublishOnly": "npx terser index.js -c -m -o index.min.js",
-    "push": "git commit -am 'add new feature'; git push; npm publish;",
+    "release": "node release.js",
     "test": "node test.js && exit 1"
   },
   "repository": {
